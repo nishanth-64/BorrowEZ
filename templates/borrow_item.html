@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Borrow Item - BorrowEZ{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0"><i class="fas fa-hand-holding"></i> Item Details</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        {% if item.image_path %}
+                        <img src="{{ url_for('uploaded_file', filename=item.image_path) }}" class="img-fluid rounded" alt="{{ item.item_name }}">
+                        {% else %}
+                        <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 300px;">
+                            <i class="fas fa-box fa-4x text-muted"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h3>{{ item.item_name }}</h3>
+                        <p class="text-muted"><i class="fas fa-tag"></i> {{ item.category }}</p>
+                        
+                        <div class="mb-3">
+                            <h5><i class="fas fa-rupee-sign"></i> Rent Details</h5>
+                            <p class="fs-4 text-success">₹{{ item.rent_per_hour }}/hour</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h5><i class="fas fa-user"></i> Lender Information</h5>
+                            <p><strong>Name:</strong> {{ item.owner_name }}</p>
+                            <p><strong>Phone:</strong> {{ item.phone }}</p>
+                            <p><strong>Location:</strong> {{ item.location_name }}</p>
+                            <a href="{{ item.google_maps_link }}" target="_blank" class="btn btn-outline-info btn-sm">
+                                <i class="fas fa-map-marker-alt"></i> View on Google Maps
+                            </a>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h5><i class="fas fa-clock"></i> Listed On</h5>
+                            <p>{{ item.created_at.strftime('%B %d, %Y') }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="row">
+                    <div class="col-12">
+                        <h5><i class="fas fa-route"></i> Get Directions to Item</h5>
+                        <p class="text-muted">Enter your location to get step-by-step directions to the lender's location</p>
+                        
+                        <form method="POST" action="{{ url_for('get_directions', item_id=item._id) }}">
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <label for="borrower_location" class="form-label">Your Location (Street/Area Name)</label>
+                                    <input type="text" class="form-control" id="borrower_location" name="borrower_location" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">&nbsp;</label><br>
+                                    <button type="submit" class="btn btn-success w-100">
+                                        <i class="fas fa-directions"></i> Get Directions
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                    <a href="{{ item.google_maps_link }}" target="_blank" class="btn btn-info">
+                        <i class="fas fa-map-marker-alt"></i> View Location
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Directions - BorrowEZ{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0"><i class="fas fa-directions"></i> Navigation Directions</h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6><i class="fas fa-map-pin text-success"></i> From (Your Location)</h6>
+                                <p class="mb-0">{{ borrower_location }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6><i class="fas fa-map-pin text-danger"></i> To (Item Location)</h6>
+                                <p class="mb-0">{{ lender_location }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mb-4">
+                    <h5>Item: {{ item.item_name }}</h5>
+                    <p class="text-muted">Lender: {{ item.owner_name }} | Rent: ₹{{ item.rent_per_hour }}/hour</p>
+                </div>
+                
+                <div class="text-center">
+                    <a href="{{ directions_link }}" target="_blank" class="btn btn-success btn-lg">
+                        <i class="fas fa-external-link-alt"></i> Open in Google Maps
+                    </a>
+                    <p class="text-muted mt-2">
+                        <i class="fas fa-info-circle"></i> This will open Google Maps with turn-by-turn directions
+                    </p>
+                </div>
+                
+                <div class="mt-4">
+                    <div class="alert alert-info">
+                        <h6><i class="fas fa-lightbulb"></i> Tips for Borrowing:</h6>
+                        <ul class="mb-0">
+                            <li>Contact the lender to arrange pickup time</li>
+                            <li>Inspect the item before borrowing</li>
+                            <li>Return the item in the same condition</li>
+                            <li>Pay the agreed rental amount on time</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{{ url_for('borrow_item', item_id=item._id) }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Item Details
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary">
+                        <i class="fas fa-tachometer-alt"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
